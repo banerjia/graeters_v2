@@ -10,7 +10,7 @@ class CreateCompanies < ActiveRecord::Migration[7.0]
 
     execute <<-SQL
       ALTER TABLE companies 
-        MODIFY COLUMN id INT UNSIGNED
+        MODIFY COLUMN id INT UNSIGNED AUTO_INCREMENT
     SQL
 
     add_index :companies, [:active, :id, :url]

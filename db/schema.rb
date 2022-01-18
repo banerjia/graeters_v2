@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2022_01_18_220129) do
 
-  create_table "companies", id: { type: :integer, unsigned: true, default: nil }, charset: "utf8mb4", force: :cascade do |t|
+  create_table "companies", id: { type: :integer, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.string "url", null: false
     t.boolean "active", default: true, null: false
