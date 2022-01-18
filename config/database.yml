@@ -8,14 +8,14 @@
 #
 # And be sure to use new-style password hashing:
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
-#
+
 default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: 123456
-  host: localhost
+  username: app_admin
+  password: 
+  host: tgtn-apps-dev.cp8r9fflvorq.us-east-1.rds.amazonaws.com
 
 development:
   <<: *default
