@@ -13,12 +13,17 @@
 
   <div>
     <%= form.label :name, style: "display: block" %>
-    <%= form.text_area :name %>
+    <%= form.text_field :name %>
   </div>
 
   <div>
     <%= form.label :url, style: "display: block" %>
-    <%= form.text_area :url %>
+    <%= form.text_field :url %>
+  </div>
+
+  <div>
+    <%= form.label :active, style: "display: block" %>
+    <%= form.check_box :active %>
   </div>
 
   <div>
