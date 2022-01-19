@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :companies
+  # DEV Note: SCOPE has been added for development environment
+  scope '/graeters' do 
+    resources :companies
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
