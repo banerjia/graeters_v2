@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2022_02_11_152730) do
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
@@ -67,4 +68,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_11_152730) do
 
   add_foreign_key "stores", "retailers"
   add_foreign_key "stores", "states"
+=======
+ActiveRecord::Schema.define(version: 0) do
+
+>>>>>>> e191cc3 (Basic Bootstrap Test)
 end
