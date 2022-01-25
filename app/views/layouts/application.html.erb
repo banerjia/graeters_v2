@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     
   </head>
@@ -43,7 +46,7 @@
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container main-body">
         <div class="row">
           <div class="col">
             <h1 class="h1">
@@ -53,6 +56,15 @@
         </div>
       <%= yield -%>
     </div>
+    <footer class="navbar fixed-bottom">
+      <ul class="footer-links">
+        <li><a href="https://graeters.com" target="_blank">Graeter's Website</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Create a Ticket</a></li>            
+      </ul>          
+      <p>&copyCopyright Reserved <%= Date.today.year -%></p>
+    </footer>
   </body>
   <%= javascript_importmap_tags %>
 </html>
