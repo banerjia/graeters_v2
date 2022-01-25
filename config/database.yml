@@ -13,16 +13,9 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-<<<<<<< HEAD
   username: root 
   password: 
   host: tgtn-apps-dev.cp8r9fflvorq.us-east-1.rds.amazonaws.com
-=======
-  username: root
-  password: 123456
-  host: localhost
-  #tgtn-apps-dev.cp8r9fflvorq.us-east-1.rds.amazonaws.com
->>>>>>> e191cc3 (Basic Bootstrap Test)
 
 development:
   <<: *default

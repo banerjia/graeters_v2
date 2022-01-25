@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-<<<<<<< HEAD
   scope '/graeters' do
     namespace :manage do
       resources :retailers
@@ -21,11 +20,4 @@ Rails.application.routes.draw do
 
     root "retailers#index"
   end
-
-=======
-  # Defines the root path route ("/")
-  # root "articles#index"
-
-  get 'home/index', to: 'home#index'
->>>>>>> e191cc3 (Basic Bootstrap Test)
 end
