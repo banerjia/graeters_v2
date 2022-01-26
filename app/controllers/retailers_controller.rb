@@ -3,7 +3,8 @@ class RetailersController < ApplicationController
 
   # GET /retailers or /retailers.json
   def index
-    @retailers = Retailer.all
+    @retailers_active = Retailer.where({active: true}).select([:id, :name, :url])
+    @retailers_inactive = Retailer.where({active: false}).select([:id, :name, :url])
   end
 
   # GET /retailers/1 or /retailers/1.json
@@ -49,7 +50,7 @@ class RetailersController < ApplicationController
 
   # DELETE /retailers/1 or /retailers/1.json
   def destroy
-    @retailer.destroy
+    @retailer.update!({active: false})
 
     respond_to do |format|
       format.html { redirect_to retailers_url, notice: "Retailer was successfully destroyed." }

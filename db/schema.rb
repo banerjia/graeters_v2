@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_173151) do
+ActiveRecord::Schema.define(version: 2022_01_26_204052) do
+
+  create_table "comments", charset: "utf8mb4", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["created_at"], name: "index_comments_on_created_at"
+  end
 
   create_table "retailers", id: { type: :integer, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -18,7 +28,12 @@ ActiveRecord::Schema.define(version: 2022_01_26_173151) do
     t.boolean "active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "comments_type"
+    t.bigint "comments_id"
+    t.integer "retailer_comments_count", unsigned: true
+    t.integer "comments_count", unsigned: true
     t.index ["active", "id", "url"], name: "index_retailers_on_active_and_id_and_url"
+    t.index ["comments_type", "comments_id"], name: "index_retailers_on_comments"
     t.index ["url"], name: "index_retailers_on_url", unique: true
   end
 

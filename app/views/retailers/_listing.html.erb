@@ -1,0 +1,21 @@
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Retailer</th>
+            <th scope="col">URL</th>
+            <th scope="col" style="width:10%">Options</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <% retailers.each do |retailer| %>
+        <tr>
+            <th scope="row"><%= retailer.name -%></th>
+            <td><%= retailer.url -%></td>
+            <td>
+                <%= link_to "Edit", edit_retailer_url(retailer) -%>
+            </td>
+        </tr>
+    <% end -%>
+    </tbody>
+</table>

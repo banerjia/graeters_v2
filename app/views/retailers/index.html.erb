@@ -2,13 +2,14 @@
 
 <h1>Retailers</h1>
 
-<div id="retailers">
-  <% @retailers.each do |retailer| %>
-    <%= render retailer %>
-    <p>
-      <%= link_to "Show this retailer", retailer %>
-    </p>
-  <% end %>
+<div class="row">
+  <div class="col">
+    <h2>Active</h2>
+    <%= render 'listing', {Table_Caption: 'Active', retailers: @retailers_active} %>
+  </div>
+  <div class="col">
+    <h2>Inactive</h2>
+    <%= render 'listing', {Table_Caption: 'Inactive', retailers: @retailers_inactive} %>
+  </div>
 </div>
-
 <%= link_to "New retailer", new_retailer_path %>
