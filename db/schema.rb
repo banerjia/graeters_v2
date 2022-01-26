@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_204052) do
+ActiveRecord::Schema.define(version: 2022_01_26_194350) do
 
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
@@ -28,12 +28,8 @@ ActiveRecord::Schema.define(version: 2022_01_26_204052) do
     t.boolean "active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "comments_type"
-    t.bigint "comments_id"
-    t.integer "retailer_comments_count", unsigned: true
     t.integer "comments_count", unsigned: true
     t.index ["active", "id", "url"], name: "index_retailers_on_active_and_id_and_url"
-    t.index ["comments_type", "comments_id"], name: "index_retailers_on_comments"
     t.index ["url"], name: "index_retailers_on_url", unique: true
   end
 
