@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_220129) do
+ActiveRecord::Schema.define(version: 2022_01_26_173151) do
 
-  create_table "companies", id: { type: :integer, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
+  create_table "retailers", id: { type: :integer, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.string "url", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["active", "id", "url"], name: "index_companies_on_active_and_id_and_url"
-    t.index ["url"], name: "index_companies_on_url", unique: true
+    t.index ["active", "id", "url"], name: "index_retailers_on_active_and_id_and_url"
+    t.index ["url"], name: "index_retailers_on_url", unique: true
   end
 
 end
