@@ -4,7 +4,7 @@ class AddCounterCacheToRetailers < ActiveRecord::Migration[7.0]
 
     execute <<-SQL
       ALTER TABLE retailers 
-        MODIFY COLUMN comments_count INT UNSIGNED 
+        MODIFY COLUMN comments_count INT UNSIGNED NOT NULL DEFAULT 0
     SQL
   end
 

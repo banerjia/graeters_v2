@@ -3,4 +3,5 @@ class Retailer < ApplicationRecord
     validates :url, presence: true, uniqueness: true
 
     has_many :comments, as: :commentable
+    accepts_nested_attributes_for :comments
 end

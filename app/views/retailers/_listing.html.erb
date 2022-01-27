@@ -11,9 +11,13 @@
     <% retailers.each do |retailer| %>
         <tr>
             <th scope="row"><%= retailer.name -%></th>
-            <td><%= retailer.url -%></td>
+            <td><%= link_to retailer.name, retailer -%></td>
             <td>
                 <%= link_to "Edit", edit_retailer_url(retailer) -%>
+                <%- if retailer.active -%>
+                    |
+                    <%= button_to "Delete", retailer, method: :delete -%>
+                <%- end -%>
             </td>
         </tr>
     <% end -%>

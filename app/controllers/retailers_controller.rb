@@ -3,8 +3,8 @@ class RetailersController < ApplicationController
 
   # GET /retailers or /retailers.json
   def index
-    @retailers_active = Retailer.where({active: true}).select([:id, :name, :url])
-    @retailers_inactive = Retailer.where({active: false}).select([:id, :name, :url])
+    @retailers_active = Retailer.where({active: true}).select([:id, :name, :url, :active, :comments_count])
+    @retailers_inactive = Retailer.where({active: false}).select([:id, :name, :url, :active, :comments_count])
   end
 
   # GET /retailers/1 or /retailers/1.json
@@ -61,11 +61,11 @@ class RetailersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_retailer
-      @retailer = Retailer.find(params[:id])
+      @retailer = Retailer.includes(:comments).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def retailer_params
-      params.require(:retailer).permit(:name, :url, :active)
+      params.require(:retailer).permit(:name, :url, :active, :comments)
     end
 end

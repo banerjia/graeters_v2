@@ -10,3 +10,8 @@
   </p>
 
 </div>
+<div>
+  <% retailer.comments.each do |comment| -%>
+    <%= render comment %>
+  <% end %>
+</div>
