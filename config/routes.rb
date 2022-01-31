@@ -4,8 +4,16 @@ Rails.application.routes.draw do
   scope '/graeters' do
     namespace :manage do
       resources :retailers
+
+      root 'manage/retailers#index'
     end
 
-    root 'manage/retailers#index'
+    scope path: ":retailer" do
+      get "/", to: "retailers#index"
+      resources :stores , only: [:index]
+
+      root "retailers#index", as: :retailer_root
+    end
   end
+
 end
