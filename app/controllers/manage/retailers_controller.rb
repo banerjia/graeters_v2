@@ -1,4 +1,4 @@
-class RetailersController < ApplicationController
+class Manage::RetailersController < ApplicationController
   before_action :set_retailer, only: %i[ show edit update destroy ]
 
   # GET /retailers or /retailers.json
@@ -26,7 +26,7 @@ class RetailersController < ApplicationController
 
     respond_to do |format|
       if @retailer.save
-        format.html { redirect_to retailer_url(@retailer), notice: "Retailer was successfully created." }
+        format.html { redirect_to manage_retailer_url(@retailer), notice: "Retailer was successfully created." }
         format.json { render :show, status: :created, location: @retailer }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class RetailersController < ApplicationController
   def update
     respond_to do |format|
       if @retailer.update(retailer_params)
-        format.html { redirect_to retailer_url(@retailer), notice: "Retailer was successfully updated." }
+        format.html { redirect_to manage_retailer_url(@retailer), notice: "Retailer was successfully updated." }
         format.json { render :show, status: :ok, location: @retailer }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class RetailersController < ApplicationController
     @retailer.update!({active: false})
 
     respond_to do |format|
-      format.html { redirect_to retailers_url, notice: "Retailer was successfully destroyed." }
+      format.html { redirect_to manage_retailers_url, notice: "Retailer was successfully destroyed." }
       format.json { head :no_content }
     end
   end

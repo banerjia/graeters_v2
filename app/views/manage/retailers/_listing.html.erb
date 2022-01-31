@@ -11,12 +11,12 @@
     <% retailers.each do |retailer| %>
         <tr>
             <th scope="row"><%= retailer.name -%></th>
-            <td><%= link_to retailer.name, retailer -%></td>
+            <td><%= link_to retailer.name, manage_retailer_url(retailer) -%></td>
             <td>
-                <%= link_to "Edit", edit_retailer_url(retailer) -%>
+                <%= link_to "Edit", edit_manage_retailer_url(retailer) -%>
                 <%- if retailer.active -%>
                     |
-                    <%= button_to "Delete", retailer, method: :delete -%>
+                    <%= button_to "Delete", manage_retailer_url(retailer), method: :delete -%>
                 <%- end -%>
             </td>
         </tr>
