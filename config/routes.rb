@@ -9,10 +9,11 @@ Rails.application.routes.draw do
     end
 
     scope path: ":retailer" do
-      get "/", to: "retailers#index"
-      resources :stores , only: [:index]
+      get "/", to: "retailers#show"
+      resources :stores , only: [:index, :show]
+      resources :comments, only: [:index, :show, :destroy]
 
-      root "retailers#index", as: :retailer_root
+      root "retailers#show", as: :retailer_root
     end
   end
 
