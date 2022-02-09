@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  retailer: one
+  state: one
+  name: MyString
+  addr_ln_1: MyString
+  addr_ln_2: MyString
+  city: MyString
+  latitude: 1.5
+  longitude: 1.5
+  active: false
+
+two:
+  retailer: two
+  state: two
+  name: MyString
+  addr_ln_1: MyString
+  addr_ln_2: MyString
+  city: MyString
+  latitude: 1.5
+  longitude: 1.5
+  active: false

@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_204052) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_02_09_214626) do
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "commentable_type"
     t.bigint "commentable_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
@@ -26,11 +25,38 @@ ActiveRecord::Schema.define(version: 2022_01_26_204052) do
     t.string "name", null: false
     t.string "url", null: false
     t.boolean "active", default: true, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "comments_count", default: 0, null: false, unsigned: true
+    t.integer "stores_count", default: 0, null: false, unsigned: true
     t.index ["active", "id", "url"], name: "index_retailers_on_active_and_id_and_url"
     t.index ["url"], name: "index_retailers_on_url", unique: true
   end
 
+  create_table "states", id: { type: :integer, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
+    t.string "state_code", limit: 2
+    t.string "country_code", limit: 2
+    t.index ["country_code", "state_code"], name: "index_states_on_country_code_and_state_code", unique: true
+  end
+
+  create_table "stores", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
+    t.integer "retailer_id", null: false, unsigned: true
+    t.integer "state_id", null: false, unsigned: true
+    t.string "name", limit: 128
+    t.string "addr_ln_1"
+    t.string "addr_ln_2"
+    t.string "city", limit: 128
+    t.float "latitude"
+    t.float "longitude"
+    t.integer "active", limit: 1, default: 1
+    t.integer "comments_count", default: 0, null: false, unsigned: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active", "retailer_id", "id"], name: "index_stores_on_active_and_retailer_id_and_id"
+    t.index ["retailer_id"], name: "index_stores_on_retailer_id"
+    t.index ["state_id"], name: "index_stores_on_state_id"
+  end
+
+  add_foreign_key "stores", "retailers"
+  add_foreign_key "stores", "states"
 end
