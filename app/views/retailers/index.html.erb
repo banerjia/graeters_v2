@@ -1,4 +1,22 @@
 <table class="table">
+    <caption class="h2">Recently Updated Retailers</caption>
+    <thead>
+        <tr>
+            <th scope="col">Retailers</th>
+            <th scope="col">Date Added</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @recently_updated_retailers.each do |retailer|  %>
+            <tr>
+                <th scope="row"><%= link_to retailer.name, retailer_root_path(retailer.url) -%></th>
+                <td><%= retailer.updated_at %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<table class="table">
     <caption class="h2">Retailers</caption>
     <thead>
         <tr>

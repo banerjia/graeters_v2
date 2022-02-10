@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_09_214626) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_10_190321) do
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -29,7 +29,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_09_214626) do
     t.datetime "updated_at", null: false
     t.integer "comments_count", default: 0, null: false, unsigned: true
     t.integer "stores_count", default: 0, null: false, unsigned: true
+    t.datetime "latest_comment_date"
+    t.datetime "latest_store_add_date"
     t.index ["active", "id", "url"], name: "index_retailers_on_active_and_id_and_url"
+    t.index ["active", "latest_comment_date"], name: "index_retailers_on_active_and_latest_comment_date"
+    t.index ["active", "latest_store_add_date"], name: "index_retailers_on_active_and_latest_store_add_date"
     t.index ["url"], name: "index_retailers_on_url", unique: true
   end
 
@@ -52,7 +56,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_09_214626) do
     t.integer "comments_count", default: 0, null: false, unsigned: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "latest_comment_date"
     t.index ["active", "retailer_id", "id"], name: "index_stores_on_active_and_retailer_id_and_id"
+    t.index ["active", "retailer_id", "latest_comment_date"], name: "index_stores_on_active_and_retailer_id_and_latest_comment_date"
+    t.index ["active", "retailer_id", "updated_at"], name: "index_stores_on_active_and_retailer_id_and_updated_at"
     t.index ["retailer_id"], name: "index_stores_on_retailer_id"
     t.index ["state_id"], name: "index_stores_on_state_id"
   end
