@@ -1,35 +1,57 @@
+<% if @retailers_with_new_stores.any? %>
 <table class="table">
-    <caption class="h2">Recently Updated Retailers</caption>
+    <caption class="h2">Retailers with New Stores</caption>
     <thead>
         <tr>
             <th scope="col">Retailers</th>
-            <th scope="col">Date Added</th>
+            <th scope="col">Number of New Stores</th>
         </tr>
     </thead>
     <tbody>
-        <% @recently_updated_retailers.each do |retailer|  %>
+        <% @retailers_with_new_stores.each do |retailer|  %>
             <tr>
-                <th scope="row"><%= link_to retailer.name, retailer_root_path(retailer.url) -%></th>
-                <td><%= retailer.updated_at %></td>
+                <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
+                <td><%= retailer.latest_store_add_date %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<% end %>
+
+<table class="table">
+    <caption class="h2">All Retailers</caption>
+    <thead>
+        <tr>
+            <th scope="col">Retailers</th>
+            <th scope="col">Number of Stores</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @all_retailers.each do |retailer|  %>
+            <tr>
+                <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
+                <td><%= retailer.stores.size -%></td>
             </tr>
         <% end %>
     </tbody>
 </table>
 
+<% if @retailers_with_new_stores.any? %>
 <table class="table">
-    <caption class="h2">Retailers</caption>
+    <caption class="h2">Retailers with New Comments</caption>
     <thead>
         <tr>
             <th scope="col">Retailers</th>
-            <th scope="col">Date Added</th>
+            <th scope="col">Latest Comment Date</th>
         </tr>
     </thead>
     <tbody>
-        <% @retailers.each do |retailer|  %>
+        <% @recently_commented_retailers.each do |retailer|  %>
             <tr>
-                <th scope="row"><%= link_to retailer.name, retailer_root_path(retailer.url) -%></th>
-                <td></td>
+                <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
+                <td><%= retailer.latest_comment_date %></td>
             </tr>
         <% end %>
     </tbody>
 </table>
+<% end %>

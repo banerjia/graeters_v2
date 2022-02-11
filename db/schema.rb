@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_10_190321) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_11_152730) do
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -38,8 +38,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_10_190321) do
   end
 
   create_table "states", id: { type: :integer, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
-    t.string "state_code", limit: 2
-    t.string "country_code", limit: 2
+    t.string "state_code", limit: 10, default: "na", null: false
+    t.string "country_code", limit: 2, default: "us", null: false
+    t.string "state_name", limit: 128, default: "Undefined", null: false
     t.index ["country_code", "state_code"], name: "index_states_on_country_code_and_state_code", unique: true
   end
 
