@@ -1,57 +1,76 @@
-<% if @retailers_with_new_stores.any? %>
-<table class="table">
-    <caption class="h2">Retailers with New Stores</caption>
-    <thead>
-        <tr>
-            <th scope="col">Retailers</th>
-            <th scope="col">Number of New Stores</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @retailers_with_new_stores.each do |retailer|  %>
-            <tr>
-                <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
-                <td><%= retailer.latest_store_add_date %></td>
-            </tr>
-        <% end %>
-    </tbody>
-</table>
-<% end %>
 
-<table class="table">
-    <caption class="h2">All Retailers</caption>
-    <thead>
-        <tr>
-            <th scope="col">Retailers</th>
-            <th scope="col">Number of Stores</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @all_retailers.each do |retailer|  %>
-            <tr>
-                <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
-                <td><%= retailer.stores.size -%></td>
-            </tr>
-        <% end %>
-    </tbody>
-</table>
 
-<% if @retailers_with_new_stores.any? %>
-<table class="table">
-    <caption class="h2">Retailers with New Comments</caption>
-    <thead>
-        <tr>
-            <th scope="col">Retailers</th>
-            <th scope="col">Latest Comment Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @recently_commented_retailers.each do |retailer|  %>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="tab-RetailersWithNewStores" data-bs-toggle="tab" data-bs-target="#RetailesWithNewStores" type="button" role="tab" aria-controls="" aria-selected="true">New Stores</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="tab-AllRetailers" data-bs-toggle="tab" data-bs-target="#AllRetailers" type="button" role="tab" aria-controls="AllRetailers" aria-selected="false">All Retailers</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="tab-RecentlyCommented" data-bs-toggle="tab" data-bs-target="#RecentlyCommented" type="button" role="tab" aria-controls="RecentlyCommented" aria-selected="false">Recently Commented</button>
+  </li>
+</ul>
+<div class="tab-content" id="RetailesWithNewStores">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="tab-RetailersWithNewStores">
+    <% if @retailers_with_new_stores.any? %>
+    <table class="table">
+        <caption class="h2">Retailers with New Stores</caption>
+        <thead>
             <tr>
-                <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
-                <td><%= retailer.latest_comment_date %></td>
+                <th scope="col">Retailers</th>
+                <th scope="col">Number of New Stores</th>
             </tr>
-        <% end %>
-    </tbody>
-</table>
-<% end %>
+        </thead>
+        <tbody>
+            <% @retailers_with_new_stores.each do |retailer|  %>
+                <tr>
+                    <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
+                    <td><%= retailer.latest_store_add_date.localtime %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <% end %>
+  </div>
+  <div class="tab-pane fade" id="AllRetailers" role="tabpanel" aria-labelledby="tab-AllRetailers">
+    <table class="table">
+        <caption class="h2">All Retailers</caption>
+        <thead>
+            <tr>
+                <th scope="col">Retailers</th>
+                <th scope="col">Number of Stores</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @all_retailers.each do |retailer|  %>
+                <tr>
+                    <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
+                    <td><%= retailer.stores.size -%></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="RecentlyCommented" role="tabpanel" aria-labelledby="tab-RecentlyCommented">
+    <% if @retailers_with_new_stores.any? %>
+    <table class="table">
+        <caption class="h2">Retailers with New Comments</caption>
+        <thead>
+            <tr>
+                <th scope="col">Retailers</th>
+                <th scope="col">Latest Comment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @recently_commented_retailers.each do |retailer|  %>
+                <tr>
+                    <th scope="row"><%= link_to retailer.name, retailer_path(retailer.url) -%></th>
+                    <td><%= retailer.latest_comment_date %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <% end %>
+  </div>
+</div>
