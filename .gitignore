@@ -69,3 +69,5 @@ yarn-debug.log*
 
 # Custom
 .browserslistrc
+.DS_Store
+.env

@@ -20,5 +20,6 @@ module GraetersV2
     # config.eager_load_paths << Rails.root.join("extras")
     config.hosts << "abhishekbanerji.com"
     config.assets.prefix = "/graeters/assets"
+    ::Git_branch = `git rev-parse --abbrev-ref HEAD`
   end
 end

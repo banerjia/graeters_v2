@@ -62,7 +62,10 @@
         <li><a href="https://graeters.com" target="_blank">Graeter's Website</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Privacy</a></li>
-        <li><a href="#">Create a Ticket</a></li>            
+        <li><a href="#">Create a Ticket</a></li>     
+        <% if Rails.env.development? %>
+        <li>Current Branch: <%= Git_branch -%> </li>
+        <% end %>
       </ul>          
       <p>&copyCopyright Reserved <%= Date.today.year -%></p>
     </footer>
