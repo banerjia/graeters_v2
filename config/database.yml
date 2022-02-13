@@ -15,7 +15,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root 
   password: 
-  host: tgtn-apps-dev.cp8r9fflvorq.us-east-1.rds.amazonaws.com
+  host: <%= ENV.fetch("DB") %>
 
 development:
   <<: *default

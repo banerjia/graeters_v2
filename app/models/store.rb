@@ -24,7 +24,7 @@ class Store < ApplicationRecord
       address = "%s, %s, %s" % [self.addr_ln_1, self.city, self.state.state_code]
       address = CGI.escape(address)
 
-      gmaps_uri = URI('https://maps.googleapis.com/maps/api/geocode/json?address='+ address + '&key=A')
+      gmaps_uri = URI('https://maps.googleapis.com/maps/api/geocode/json?address='+ address + '&key=' + ENV.fetch("GMAPS_API"))
 
       gmaps_resp_obj = Net::HTTP.get_response(gmaps_uri)
 
