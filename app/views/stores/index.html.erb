@@ -1,0 +1,18 @@
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Lat/Lng</th>
+        </tr>
+    </thead>
+    <tbody>
+    <% @stores.each do |store| %>
+        <tr>
+            <th scope="row"><%= store.name %></th>
+            <td><%= "%s, %s, %s" % [store.addr_ln_1, store.city, store.state_code] %></td>
+            <td><%= "%f, %f" % [store.latitude, store.longitude] %></td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>

@@ -18,6 +18,10 @@ class Store < ApplicationRecord
   after_create :set_retailer_last_updated
 
 
+  def full_address
+    
+  end
+
   # Private Functions
   private
   def set_lat_lng
