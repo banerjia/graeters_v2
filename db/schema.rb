@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_11_152730) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_14_211320) do
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_11_152730) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "latest_comment_date"
+    t.string "zip_code", limit: 15
     t.index ["active", "retailer_id", "id"], name: "index_stores_on_active_and_retailer_id_and_id"
     t.index ["active", "retailer_id", "latest_comment_date"], name: "index_stores_on_active_and_retailer_id_and_latest_comment_date"
     t.index ["active", "retailer_id", "updated_at"], name: "index_stores_on_active_and_retailer_id_and_updated_at"

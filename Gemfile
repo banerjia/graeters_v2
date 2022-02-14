@@ -71,3 +71,8 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+# Custom Gems for Graeters
+gem 'elasticsearch', '7.13.0'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'

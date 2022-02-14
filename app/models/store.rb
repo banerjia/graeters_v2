@@ -1,8 +1,20 @@
 require 'net/http'
 require 'json'
 require 'uri'
+require 'elasticsearch/model'
 
 class Store < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+<<-ES_CLIENT
+  Store.__elasticsearch__.client = Elasticsearch::Client.new(
+    host: ENV.fetch("ES_ENDPOINT"),
+    http: { scheme: 'https', user: ENV.fetch("ES_USER"), password: ENV.fetch("ES_PASSWD") },
+    reload_connections: true,
+    reload_on_failure: true
+  )
+ES_CLIENT
 
   # Associations
   belongs_to :retailer, counter_cache: true
@@ -17,15 +29,10 @@ class Store < ApplicationRecord
   after_validation :set_lat_lng, on: [ :create, :update]
   after_create :set_retailer_last_updated
 
-
-  def full_address
-    
-  end
-
   # Private Functions
   private
   def set_lat_lng
-      address = "%s, %s, %s" % [self.addr_ln_1, self.city, self.state.state_code]
+      address = "%s, %s, %s" % [self.addr_ln_1, self.city, self.state[:state_code]]
       address = CGI.escape(address)
 
       gmaps_uri = URI('https://maps.googleapis.com/maps/api/geocode/json?address='+ address + '&key=' + ENV.fetch("GMAPS_API"))

@@ -10,7 +10,7 @@
     <% @stores.each do |store| %>
         <tr>
             <th scope="row"><%= store.name %></th>
-            <td><%= "%s, %s, %s" % [store.addr_ln_1, store.city, store.state_code] %></td>
+            <td><%= store_address(store) %></td>
             <td><%= "%f, %f" % [store.latitude, store.longitude] %></td>
         </tr>
     <% end %>
