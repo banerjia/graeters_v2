@@ -7,14 +7,13 @@ class Store < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-<<-ES_CLIENT
+
   Store.__elasticsearch__.client = Elasticsearch::Client.new(
     host: ENV.fetch("ES_ENDPOINT"),
     http: { scheme: 'https', user: ENV.fetch("ES_USER"), password: ENV.fetch("ES_PASSWD") },
     reload_connections: true,
     reload_on_failure: true
   )
-ES_CLIENT
 
   # Associations
   belongs_to :retailer, counter_cache: true
