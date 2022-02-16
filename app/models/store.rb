@@ -15,6 +15,9 @@ class Store < ApplicationRecord
     reload_on_failure: true
   )
 
+  # Scopes
+  default_scope {where({active: true})}
+
   # Associations
   belongs_to :retailer, counter_cache: true
   belongs_to :state
