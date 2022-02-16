@@ -6,14 +6,14 @@ class RetailersController < ApplicationController
 
         @retailers_with_new_stores = Retailer \
                         .where({latest_store_add_date: recent_range})
-                        .select([:id, :name, :url, :latest_store_add_date]) \
+                        .select([:id, :name, :url, :latest_store_add_date, :stores_count]) \
                         .order({ latest_store_add_date: :desc})
         @recently_commented_retailers = Retailer \
                         .where(latest_comment_date: recent_range)
-                        .select([:id, :name, :url, :latest_comment_date]) \
+                        .select([:id, :name, :url, :latest_comment_date, :stores_count]) \
                         .order({ latest_comment_date: :desc})
         @all_retailers = Retailer \
-                        .select([:name, :url]) \
+                        .select([:name, :url, :stores_count]) \
                         .order({ name: :asc})
     end
 

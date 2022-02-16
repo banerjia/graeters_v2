@@ -23,6 +23,7 @@ class Store < ApplicationRecord
   belongs_to :state
 
   has_many :comments, as: :commentable
+  has_one :store_attribute
 
   # Validations
   validates :name, :addr_ln_1, :city, :state_id, presence: true
@@ -34,6 +35,13 @@ class Store < ApplicationRecord
   # Private Functions
   private
   def set_lat_lng
+
+      # Ignore latitute and longitude values if 
+      # they are already present. 
+      # TO-DO: Limit this to :create only. During an :update lat/long may change
+      # if the address has changed. 
+      return unless self.latitude.nil? && self.longitude.nil?
+
       address = "%s, %s, %s" % [self.addr_ln_1, self.city, self.state[:state_code]]
       address = CGI.escape(address)
 

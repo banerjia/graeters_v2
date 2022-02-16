@@ -9,8 +9,10 @@ class StoresController < ApplicationController
         # Alternatively, pagination may be an equally good option. 
         
         @stores = Store \
-                    .joins(:state) \
-                    .select("`stores`.*, `states`.`state_code`")
+                    .includes(:state, :store_attribute) \
+                    .joins([:state, :store_attribute]) \
+                    .where({retailer_id: @retailer.id})
+                    #.select("`stores`.*, `states`.`state_code`, `store_attributes`.`attr`")
     end
 
     def show

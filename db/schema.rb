@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_14_211320) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_16_045104) do
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -44,6 +44,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_14_211320) do
     t.index ["country_code", "state_code"], name: "index_states_on_country_code_and_state_code", unique: true
   end
 
+  create_table "store_attributes", id: false, charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "store_id", null: false, unsigned: true
+    t.text "attr", size: :long, collation: "utf8mb4_bin"
+    t.index ["store_id"], name: "index_store_attributes_on_store_id"
+    t.check_constraint "json_valid(`attr`)", name: "attr"
+  end
+
   create_table "stores", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.integer "retailer_id", null: false, unsigned: true
     t.integer "state_id", null: false, unsigned: true
@@ -66,6 +73,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_14_211320) do
     t.index ["state_id"], name: "index_stores_on_state_id"
   end
 
+  add_foreign_key "store_attributes", "stores"
   add_foreign_key "stores", "retailers"
   add_foreign_key "stores", "states"
 end

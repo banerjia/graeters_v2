@@ -73,6 +73,11 @@ group :test do
 end
 
 # Custom Gems for Graeters
+
+# Elasticsearch/AWS Open Search
 gem 'elasticsearch', '7.13.0'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+
+# Misc.
+gem 'ruby-slugify'
