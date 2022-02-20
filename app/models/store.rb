@@ -4,6 +4,8 @@ require 'uri'
 require 'elasticsearch/model'
 
 class Store < ApplicationRecord
+
+
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
@@ -23,7 +25,7 @@ class Store < ApplicationRecord
   belongs_to :state
 
   has_many :comments, as: :commentable
-  has_one :store_attribute
+  has_one :other_attribute, as: :attributable
 
   # Validations
   validates :name, :addr_ln_1, :city, :state_id, presence: true

@@ -4,6 +4,7 @@ class Retailer < ApplicationRecord
     validates :url, presence: true, uniqueness: true
 
     # Associations
+    has_one :additional_attr, as: :attributable 
     has_many :stores
     has_many :states, through: :stores
     has_many :comments, as: :commentable

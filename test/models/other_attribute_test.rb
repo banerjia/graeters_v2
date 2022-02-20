@@ -1,6 +1,6 @@
 require "test_helper"
 
-class StoreAttributeTest < ActiveSupport::TestCase
+class OtherAttributeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

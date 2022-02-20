@@ -6,15 +6,13 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Address</th>
-            <th scope="col">Lat/Lng</th>
         </tr>
     </thead>
     <tbody>
     <% @stores.each do |store| %>
         <tr>
-            <th scope="row"><%= store.name %> </th>
+            <th scope="row"><%= store.name %> <%= get_attributes(store.data) %></th>
             <td><%= store_address(store) %></td>
-            <td><%= "%f, %f" % [store.latitude, store.longitude] %></td>
         </tr>
     <% end %>
     </tbody>

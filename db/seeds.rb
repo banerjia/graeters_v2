@@ -10,7 +10,7 @@ require 'csv'
 require 'ruby-slugify'
 require 'json'
 
-seed_tables = ['retailers', 'stores', 'states','store_attributes']
+seed_tables = ['retailers', 'stores', 'states','other_attributes']
 
 
 # Clear all tables
@@ -36,12 +36,6 @@ end
 
 # Populate Retailers
 
-<<-DUMMY_SEED
-Retailer.create({name: "Krogers", url: "krogers", active: true, created_at: 1.month.ago, updated_at: 1.month.ago})
-Retailer.create({name: "Winn Dixie", url: "winn-dixie", active: true, created_at: 1.day.ago, updated_at: 1.day.ago})
-Retailer.create({name: "Publix", url: "publix", active: true, created_at: 6.days.ago, updated_at: 6.days.ago})
-DUMMY_SEED
-
 graeters_companies = CSV.parse(File.read('db/retailers.csv'), headers: true)
 
 graeters_companies.each do |company|
@@ -66,12 +60,15 @@ graeters_regions = CSV.parse(File.read('db/regions.csv'), headers: true)
 
 # Populate Stores
 graeters_stores = CSV.parse(File.read('db/stores.csv'), headers: true)
+
 graeters_stores.each do |store|
+    addr_2 = nil
+    addr_2 = store['suite'] unless store['suite'].nil? || store['suite'].blank? || store['suite'] == '_NA_'
     s = Store.new({
         name: store['name'],
         retailer_id: store['company_id'],
         addr_ln_1: store['street_address'],
-        addr_ln_2: store['suite'],
+        addr_ln_2: addr_2,
         city: store['city'],
         state_id: State.where({state_code: store['state_code']}).first.id,
         zip_code: store['zip'],
@@ -92,26 +89,10 @@ graeters_stores.each do |store|
     attribs['region'] = selected_region.first['name'] if selected_region.any?
 
     if attribs.any?
-        s.build_store_attribute({
-            attr: attribs.to_json
+        s.build_other_attribute({
+            data: attribs.to_json
         })
     end
     s.save
 end
-
-<<-DUMMY_SEED
-# Populate Stores for Retailer
-
-retailer_krogers = Retailer.where({url: 'krogers'}).first
-i = 1
-sample_store_addresses.each do |address|
-    retailer_krogers.stores.create!({
-        name: "Sample Store {i}",
-        addr_ln_1: address[:addr_ln_1],
-        city: address[:city],
-        state: State.where({state_code: address[:state_code]}).first
-    })
-    i = i+1
-end
-DUMMY_SEED
 
