@@ -1,7 +1,7 @@
 class State < ApplicationRecord
 
     def to_s
-        self.state_code
+        self.code
     end
     
 end

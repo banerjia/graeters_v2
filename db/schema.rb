@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_20_141507) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_22_155927) do
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -46,10 +46,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_20_141507) do
   end
 
   create_table "states", id: { type: :integer, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
-    t.string "state_code", limit: 10, default: "na", null: false
+    t.string "code", limit: 10, default: "na", null: false
     t.string "country_code", limit: 2, default: "us", null: false
-    t.string "state_name", limit: 128, default: "Undefined", null: false
-    t.index ["country_code", "state_code"], name: "index_states_on_country_code_and_state_code", unique: true
+    t.string "name", limit: 128, default: "Undefined", null: false
+    t.index ["country_code", "code"], name: "index_states_on_country_code_and_code", unique: true
+  end
+
+  create_table "store_attributes", id: false, charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "store_id", null: false, unsigned: true
+    t.text "attr", size: :long, collation: "utf8mb4_bin"
+    t.index ["store_id"], name: "index_store_attributes_on_store_id"
+    t.check_constraint "json_valid(`attr`)", name: "attr"
   end
 
   create_table "stores", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
@@ -74,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_20_141507) do
     t.index ["state_id"], name: "index_stores_on_state_id"
   end
 
+  add_foreign_key "store_attributes", "stores"
   add_foreign_key "stores", "retailers"
   add_foreign_key "stores", "states"
 end

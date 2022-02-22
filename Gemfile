@@ -75,7 +75,7 @@ end
 # Custom Gems for Graeters
 
 # Elasticsearch/AWS Open Search
-gem 'elasticsearch', '7.13.0'
+gem 'elasticsearch'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 

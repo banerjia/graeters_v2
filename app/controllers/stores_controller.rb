@@ -22,7 +22,7 @@ class StoresController < ApplicationController
                     .where({retailer_id: @retailer.id}) \
                     .offset( record_offset )
                     .limit( @@_page_size )
-                    .select('stores.name, stores.addr_ln_1, stores.addr_ln_2, stores.city, states.state_code, stores.zip_code, other_attributes.data')
+                    .select('stores.name, stores.addr_ln_1, stores.addr_ln_2, stores.city, states.code, stores.zip_code, other_attributes.data')
     end
 
     def show

@@ -24,14 +24,15 @@ ActiveRecord::Base.connection.execute('SET FOREIGN_KEY_CHECKS = 1')
 Store.__elasticsearch__.delete_index!
 Store.__elasticsearch__.create_index!
 
+
 # Populate US States
 us_states = CSV.parse(File.read('db/us-states.csv'), headers: true)
 
 us_states.each do |state|
     State.create({
                     country_code: state['Country'],
-                    state_code: state['Abbreviation'],
-                    state_name: state['State']
+                    code: state['Abbreviation'],
+                    name: state['State']
                 })
 end
 
@@ -65,13 +66,14 @@ graeters_stores = CSV.parse(File.read('db/stores.csv'), headers: true)
 graeters_stores.each do |store|
     addr_2 = nil
     addr_2 = store['suite'] unless store['suite'].nil? || store['suite'].blank? || store['suite'] == '_NA_'
+    zip = store['zip'] unless store['zip'].nil? || store['zip'].blank? || store['zip'] == '_NA_'
     s = Store.new({
         name: store['name'],
         retailer_id: store['company_id'],
         addr_ln_1: store['street_address'],
         addr_ln_2: addr_2,
         city: store['city'],
-        state_id: State.where({state_code: store['state_code']}).first.id,
+        state_id: State.where({code: store['state_code']}).first.id,
         zip_code: store['zip'],
         latitude: store['latitude'].to_f,
         longitude: store['longitude'].to_f,
