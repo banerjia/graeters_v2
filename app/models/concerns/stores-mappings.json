@@ -1,0 +1,55 @@
+[
+    {
+        "base": {
+            "settings": {
+                "index": {
+                    "number_of_shards": 1,
+                    "number_of_replicas": 1
+                }
+            },
+            "mappings": {
+                "properties": {
+                    "id": {
+                        "type": "keyword",
+                        "index": "false"
+                    },
+                    "name": {
+                        "type": "text",
+                        "analyzer": "stop"
+                    },
+                    "address": {
+                        "type": "text"
+                    },
+                    "state": {
+                        "type": "keyword"
+                    },
+                    "retailer": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "stop",
+                                "fields": {
+                                    "raw": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            },
+                            "url": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "location": {
+                        "type": "geo_point"
+                    },
+                    "region": {
+                        "type": "text"
+                    }
+                }
+            }
+        }
+    }
+]

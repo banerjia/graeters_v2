@@ -21,7 +21,8 @@ end
 ActiveRecord::Base.connection.execute('SET FOREIGN_KEY_CHECKS = 1')
 
 # Clear Elasticsearch Indexes
-Store.__elasticsearch__.client.indices.delete index: Store.index_name rescue nil
+Store.__elasticsearch__.delete_index!
+Store.__elasticsearch__.create_index!
 
 # Populate US States
 us_states = CSV.parse(File.read('db/us-states.csv'), headers: true)

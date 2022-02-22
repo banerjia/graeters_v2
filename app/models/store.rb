@@ -5,7 +5,6 @@ require 'elasticsearch/model'
 
 class Store < ApplicationRecord
 
-
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
@@ -33,6 +32,61 @@ class Store < ApplicationRecord
   # Callbacks
   after_validation :set_lat_lng, on: [ :create, :update]
   after_create :set_retailer_last_updated
+
+  # Class Methods
+
+  # Created for use with OpenSearch
+  def address
+    state_code = nil
+
+    return_value = self.addr_ln_1.strip.titlecase
+    return_value += ', ' + self.addr_ln_2.strip.titlecase unless self.addr_ln_2.blank?
+    return_value += ', ' + self.city.titlecase
+
+    return_value += ', ' + self.state.state_code
+    return_value += ' - ' + self.zip_code unless self.zip_code.blank?
+
+    return return_value
+  end
+
+  def as_indexed_json(options={})
+    return_value = {}
+
+    store_name = self.name
+    store_name += " - %s" % [self.other_attribute.properties["store_number"]] \
+                      unless self.other_attribute.nil? || self.other_attribute.properties["store_number"].blank?
+
+    return_value = {
+      id: self.id,
+      name: store_name,
+      location: {lat: self.latitude, lon: self.longitude},
+      address: self.address,
+      state: self.state.state_code,
+      retailer: {
+        id: self.retailer.id,
+        name: self.retailer.name,
+        url: self.retailer.url
+      }
+    }
+    return_value[:region] = self.other_attribute.properties["region"] \
+                        unless self.other_attribute.nil? || self.other_attribute.properties["region"].blank?
+  
+    return_value.as_json
+  end
+
+  def self.import
+
+    stores = Store.left_outer_joins(:other_attribute).joins(:retailer, :state).includes(:state, :retailer, :other_attribute)
+    
+    stores.find_in_batches do |batched_stores|      
+      Store.__elasticsearch__.client.bulk({
+        index: Store.__elasticsearch__.index_name,
+        type: Store.__elasticsearch__.document_type,
+        body: batched_stores.map{ |store| {index: {_id: store.id, data: store.as_indexed_json}}}
+      })
+    end
+
+  end
 
   # Private Functions
   private
