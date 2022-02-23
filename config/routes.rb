@@ -11,9 +11,19 @@ Rails.application.routes.draw do
     get 'retailers', to: "retailers#index", constraints: {format: :html}
 
     scope path: ":retailer", as: "retailer", constraints: {format: :html} do
+      # Default to Retailer Show if no action is specified for /<something>
       get "/", to: "retailers#show"
+
+      # Stores by State, the sequence matters here so that stores/:id does not get picked
+      # up before this path
+      get 'stores/:state_code', to: 'stores#index', constraints: {state_code: /[A-Z]+/}
+
+      # The rest of the paths for retailer/stores
       resources :stores , only: [:index, :show]
+
+      # Paths for retailer/comments
       resources :comments, only: [:index, :show, :destroy]
+
 
       root "retailers#show", as: :retailer_root
     end

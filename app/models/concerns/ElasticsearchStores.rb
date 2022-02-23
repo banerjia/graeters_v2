@@ -22,7 +22,9 @@ module ElasticsearchStores
                     indexes :url, type: "keyword"
                 end
                 indexes :location, type: "geo_point"
-                indexes :region, type: "text"
+                indexes :region, type: "text" do 
+                    indexes :raw, type: "keyword"
+                end
             end
         end
 

@@ -1,6 +1,7 @@
 <%
     @Page_Title = "Stores for #{@retailer.name}"
 %>
+<%= @state.name unless @store.nil? -%> 
 <table>
     <thead>
         <tr>
@@ -11,9 +12,23 @@
     <tbody>
     <% @stores.each do |store| %>
         <tr>
-            <th scope="row"><%= store.name %> <%= get_attributes(store.data) %></th>
-            <td><%= store_address(store) %></td>
+            <th scope="row"><%= store['_source']['name'] %></th>
+            <td><%= store['_source']['address'] %></td>
         </tr>
     <% end %>
     </tbody>
 </table>
+<% @aggregations.each do |agg_key, agg_results| %>
+    <% if agg_results['buckets'].size > 1 && !agg_results['buckets'].nil? %>
+        <h2 class="h2"><%= agg_key.titlecase %></h2>
+        <ul>
+        <% agg_results['buckets'].each do |bucket_kv_pair| %>
+            <% if !@state.nil? && @state.name == bucket_kv_pair['key'] %>
+                <li class="btn-primary"><%= "%s (%d)" % [bucket_kv_pair['key'], bucket_kv_pair['doc_count']] %></li>
+            <% else %>
+                <li><%= "%s (%d)" % [bucket_kv_pair['key'], bucket_kv_pair['doc_count']] %></li>
+            <% end %>
+        <% end %>
+        </ul>
+    <% end %>
+<% end %>
