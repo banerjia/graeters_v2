@@ -8,11 +8,14 @@ module ElasticsearchStores
         settings do
             mapping dynamic: false do 
                 indexes :id, type: "keyword", index: false
-                indexes :name, type: "text", analyzer: "stop"
+                indexes :name, type: "text", analyzer: "stop" do 
+                    indexes :raw, type: "keyword"
+                end
                 indexes :address, type: "text"
                 indexes :state do
                     indexes :code, type: "keyword"
                     indexes :name, type: "keyword"
+                    indexes :agg_key, type: "keyword"
                 end
                 indexes :retailer do
                     indexes :id, type: "keyword"
@@ -46,7 +49,8 @@ module ElasticsearchStores
             address: self.address,
             state: {
                 code: self.state.code,
-                name: self.state.name
+                name: self.state.name,
+                agg_key: "%s;%s" % [self.state.name,self.state.code]
             },
             retailer: {
                 id: self.retailer.id,

@@ -24,6 +24,8 @@ class StoresController < ApplicationController
                     .limit( @@_page_size )
                     .select('stores.name, stores.addr_ln_1, stores.addr_ln_2, stores.city, states.code, stores.zip_code, other_attributes.data')
         NonESSearch
+        from = ((params[:page] || 1).to_i - 1) * @@_page_size
+
         es_query_bool_filter = [{ term: {"retailer.id": @retailer.id}}]
         if !@state.nil?
             es_query_post_filter = {term: {"state.code": @state.code}} unless @state.nil?
@@ -32,6 +34,8 @@ class StoresController < ApplicationController
         end
 
         es_search_results = Store.search({
+            from: from,
+            size: @@_page_size,
             query:{
                 bool:{
                     must: [],
@@ -41,9 +45,9 @@ class StoresController < ApplicationController
                 }
             },
             aggs:{
-                state:{
+                states:{
                     terms:{
-                        field: "state.name",
+                        field: "state.agg_key",
                         size: 50,
                         order:{
                             "_key":"asc"
@@ -63,6 +67,8 @@ class StoresController < ApplicationController
         @stores = es_search_results.results
         @aggregations = es_search_results.aggregations
         @results_found = es_search_results.results.total
+        @pages = (@results_found/@@_page_size).ceil()
+        @params = params
 
     end
 

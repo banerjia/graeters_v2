@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
       # Stores by State, the sequence matters here so that stores/:id does not get picked
       # up before this path
-      get 'stores/:state_code', to: 'stores#index', constraints: {state_code: /[A-Z]+/}
+      get 'stores/:state_code', to: 'stores#index', constraints: {state_code: /[A-Z]+/}, as: "stores_by_state"
 
       # The rest of the paths for retailer/stores
       resources :stores , only: [:index, :show]

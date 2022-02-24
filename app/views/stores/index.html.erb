@@ -18,16 +18,27 @@
     <% end %>
     </tbody>
 </table>
+<%= request.env['PATH_INFO'] %>
+<ul>
+<% (1..@pages+1).each do |page_num|%>
+    <li><%= link_to_unless_current page_num, retailer_stores_path(page: page_num) %></li>
+<% end %>
+</ul>
 <% @aggregations.each do |agg_key, agg_results| %>
     <% if agg_results['buckets'].size > 1 && !agg_results['buckets'].nil? %>
         <h2 class="h2"><%= agg_key.titlecase %></h2>
         <ul>
         <% agg_results['buckets'].each do |bucket_kv_pair| %>
-            <% if !@state.nil? && @state.name == bucket_kv_pair['key'] %>
-                <li class="btn-primary"><%= "%s (%d)" % [bucket_kv_pair['key'], bucket_kv_pair['doc_count']] %></li>
+            <li>
+            <% if agg_key == 'states' 
+                state_name, state_code = bucket_kv_pair['key'].split(';')
+            %>
+    
+                <%= link_to_unless_current ("%s (%d)" % [state_name, bucket_kv_pair['doc_count']]), retailer_stores_by_state_path( state_code: state_code) %>
             <% else %>
-                <li><%= "%s (%d)" % [bucket_kv_pair['key'], bucket_kv_pair['doc_count']] %></li>
+                <%= "%s (%d)" % [bucket_kv_pair['key'], bucket_kv_pair['doc_count']] %>
             <% end %>
+            </li>
         <% end %>
         </ul>
     <% end %>
