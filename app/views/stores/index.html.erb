@@ -18,7 +18,7 @@
     <% end %>
     </tbody>
 </table>
-<%= request.env['PATH_INFO'] %>
+
 <ul>
 <% (1..@pages+1).each do |page_num|%>
     <li><%= link_to_unless_current page_num, retailer_stores_path(page: page_num) %></li>
