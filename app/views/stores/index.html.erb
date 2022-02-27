@@ -1,7 +1,10 @@
 <%
-    @Page_Title = "Stores for #{@retailer.name}"
+    if @state.nil?
+        @Page_Title = "Stores for #{@retailer.name}"
+    else
+        @Page_Title = "Stores in %s for %s" % [@state.name, @retailer.name]
+    end
 %>
-<%= @state.name unless @store.nil? -%> 
 <table>
     <thead>
         <tr>
@@ -21,9 +24,11 @@
 
 <ul>
 <% (1..@pages+1).each do |page_num|%>
-    <li><%= link_to_unless_current page_num, retailer_stores_path(page: page_num) %></li>
+    <li><%= link_to_unless_current page_num, {page: page_num} %></li>
 <% end %>
 </ul>
+
+<!--
 <% @aggregations.each do |agg_key, agg_results| %>
     <% if agg_results['buckets'].size > 1 && !agg_results['buckets'].nil? %>
         <h2 class="h2"><%= agg_key.titlecase %></h2>
@@ -43,3 +48,4 @@
         </ul>
     <% end %>
 <% end %>
+-->
