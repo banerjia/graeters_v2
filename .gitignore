@@ -69,3 +69,4 @@ yarn-debug.log*
 
 # Custom
 .browserslistrc
+.env
