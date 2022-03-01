@@ -22,6 +22,7 @@
     </tbody>
 </table>
 
+
 <ul>
 <% (1..@pages+1).each do |page_num|%>
     <li><%= link_to_unless_current page_num, {page: page_num} %></li>
