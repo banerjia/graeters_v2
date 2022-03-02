@@ -28,6 +28,7 @@ module ElasticsearchStores
                 indexes :region, type: "text" do 
                     indexes :raw, type: "keyword"
                 end
+                indexes :created_at, type: "date"
             end
         end
 
@@ -56,7 +57,8 @@ module ElasticsearchStores
                 id: self.retailer.id,
                 name: self.retailer.name,
                 url: self.retailer.url
-            }
+            },
+            created_at: self.created_at
         }
 
         # Region information is added if one is present
