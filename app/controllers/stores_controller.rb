@@ -26,7 +26,7 @@ class StoresController < ApplicationController
                     .select('stores.name, stores.addr_ln_1, stores.addr_ln_2, stores.city, states.code, stores.zip_code, other_attributes.data')
         NonESSearch
 
-        # Determining the starting bound for the search results
+        # Calculate the starting bound for the search results
         from = ((params[:page] || 1).to_i - 1) * @@_page_size
 
         # Providing the filter for the dataset based on retailer
