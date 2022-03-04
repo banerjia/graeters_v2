@@ -106,7 +106,7 @@ class StoresController < ApplicationController
     end
 
     def set_state_code
-        @state = State.find_by_code(params[:state_code])
+        @state = State.find_by_code(params[:state_code]) unless params[:state_code].nil?
     end
 
     def set_store
