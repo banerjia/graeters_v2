@@ -5,7 +5,9 @@
         @Page_Title = "Stores in %s for %s" % [@state.name, @retailer.name]
     end
 %>
-<table>
+
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th scope="col">Name</th>
@@ -20,13 +22,62 @@
         </tr>
     <% end %>
     </tbody>
-</table>
+    <tfoot>
+        <tr>
+            <td colspan="2" class="text-center">
+                <% 
+                # Determine if pagination is needed
+                if @pages > 1 
+                    # Set default values for pagination bounds
+                    pages_lower_bound = 1
+                    pages_upper_bound = @pages
 
-<ul>
-<% (1..@pages+1).each do |page_num|%>
-    <li><%= link_to_unless_current page_num, {page: page_num} %></li>
-<% end %>
-</ul>
+                    # The number of pages that are shown in the 
+                    # page listing; keep this number an odd number
+                    # so that in most case the current page is shown
+                    # in the middle of that listing
+                    num_of_visible_pages = 5
+            
+                    # If the number of pages crosses a threshold 
+                    # then only show a subset of the pages instead
+                    # of the entire list of pages
+                    if @pages > num_of_visible_pages 
+            
+                        page_steps = (num_of_visible_pages/2).to_i
+
+                        if @current_page <= page_steps
+                            # If current page near the beginning of the first
+                            pages_upper_bound = @current_page + (num_of_visible_pages - @current_page)
+                        elsif (@current_page + page_steps) >= @pages
+                            # If current is close to the last page
+                            pages_lower_bound = @pages - num_of_visible_pages + 1
+                        else
+                            # If current page is somewhere in the middle
+                            pages_lower_bound = @current_page - page_steps
+                            pages_upper_bound = @current_page + page_steps
+                        end
+            
+                    end
+            %>            
+                    <nav aria-label="Pagination navigation">
+                        <ul class="pagination">
+                        <% if pages_lower_bound > 1 %>
+                            <li class="page-item"><%= link_to "First", {page: 1}, {class: "page-link"} %></li>
+                        <% end %>
+                        <% (pages_lower_bound..pages_upper_bound).each do |page_num| %>
+                            <li class="page-item"><%= link_to page_num, {page: page_num}, {class: "page-link"} %></li>
+                        <% end %>
+                        <% if pages_upper_bound < @pages %>
+                            <li class="page-item"><%= link_to "Last", {page: @pages}, {class: "page-link"} %></li>
+                        <% end %>
+                        </ul>
+                    </nav>  
+            
+            <%  end %>
+            </td>
+        </tr>
+    </tfoot>
+</table>
 
 <!--
 <% @aggregations.each do |agg_key, agg_results| %>

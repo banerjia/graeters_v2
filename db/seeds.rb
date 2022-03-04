@@ -52,7 +52,7 @@ graeters_companies.each do |company|
         name: company['name'],
         created_at: company['creaated_at'],
         url: slug,
-        stores_count: company['stores_count'].to_i,
+        stores_count: 0, # this is used when Store.Callbacks are not employed company['stores_count'].to_i
         updated_at: company['updated_at']
     })
 end
@@ -64,9 +64,9 @@ graeters_regions = CSV.parse(File.read('db/regions.csv'), headers: true)
 graeters_stores = CSV.parse(File.read('db/stores.csv'), headers: true)
 
 graeters_stores.each do |store|
-    addr_2 = nil
+    addr_2, zip = nil
     addr_2 = store['suite'] unless store['suite'].nil? || store['suite'].blank? || store['suite'] == '_NA_'
-    zip = store['zip'] unless store['zip'].nil? || store['zip'].blank? || store['zip'] == '_NA_'
+    zip = store['zip'] unless store['zip'].nil? || store['zip'].blank? || store['zip'].strip == '_NA_'
     s = Store.new({
         name: store['name'],
         retailer_id: store['company_id'],
@@ -74,7 +74,7 @@ graeters_stores.each do |store|
         addr_ln_2: addr_2,
         city: store['city'],
         state_id: State.where({code: store['state_code']}).first.id,
-        zip_code: store['zip'],
+        zip_code: zip,
         latitude: store['latitude'].to_f,
         longitude: store['longitude'].to_f,
         active: store['active'].to_i,

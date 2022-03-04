@@ -56,7 +56,7 @@ class Store < ApplicationRecord
       
       # TO-DO: Limit this to :create only. During an :update lat/long may change
       # if the address has changed. 
-      return unless (self.latitude.nil? && self.longitude.nil?) || self.address.changed?
+      return unless (self.latitude.nil? && self.longitude.nil?) 
 
       # Create an address string to send to Google Maps API and encode it for use
       # in URL querystring
