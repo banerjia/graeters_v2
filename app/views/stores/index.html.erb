@@ -24,7 +24,10 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="2" class="text-center">
+            <td>
+                <b>Total Stores:</b> <%= @results_found %>
+            </td>
+            <td>
                 <% 
                 # Determine if pagination is needed
                 if @pages > 1 
